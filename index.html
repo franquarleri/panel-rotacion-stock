@@ -396,7 +396,19 @@ function renderCarga(){
     ${META.corte ? `<span>· corte detectado <strong>${META.corte.texto}</strong></span>` : ''}
     <span>· cargado ${antigTxt}</span>
     <button class="btn btn-sm" style="margin-left:auto" onclick="document.getElementById('file-input').click()">↻ Cambiar archivo</button>
+    <button class="btn btn-sm" onclick="limpiarArchivo()">🗑️ Limpiar archivo</button>
   </div>`;
+}
+
+function limpiarArchivo(){
+  PRODUCTOS = [];
+  META = null;
+  filtros = { q:'', rubro:'', marca:'', tier:'', anioMin:0, orden:'sobre-desc', pag:1, detalleAbierto:false };
+  try { localStorage.removeItem(LS_DATA); } catch(err) { /* localStorage bloqueado: no pasa nada, igual reiniciamos en memoria */ }
+  const input = document.getElementById('file-input');
+  if (input) input.value = '';
+  renderCarga();
+  render();
 }
 
 function attachDropEvents(){
